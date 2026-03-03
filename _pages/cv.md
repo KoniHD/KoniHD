@@ -11,11 +11,19 @@ redirect_from:
 
 Education
 ======
-* Ph.D in Version Control Theory, GitHub University, 2018 (expected)
-* M.S. in Jekyll, GitHub University, 2014
-* B.S. in GitHub, GitHub University, 2012
+* M.Sc. in **Computational Science and Engineering**, Technical University of Munich, 2024 - present
+  * Focusing on High-Performance Computing and Artificial Intelligence in Medical Applications
+  * GPA: 1.6/1.0 (German System), 120 ECTS
+  * International Exchange (2026): **University of California Berkeley**, USA
+    * Machine Learning, Computer Vision, Quantum Computing
+* B.Sc. in **Engineering Science**, Technical University of Munich, 2020 - 2024
+  * Built a broad engineering foundation spanning Electrical, Mechanical, and Computational disciplines
+  * Specialized in Computer Science
+  * Grade: 2.1/1.0 (German System), 210 ECTS
+  * International Exchange (2023): **National University of Singapore**, Singapore
+    * Data Structures & Algorithms, Discrete Structures, Probability (GPA: 4.17/5.0)
 
-Work experience
+Professional experience
 ======
 * Spring 2024: Academic Pages Collaborator
   * GitHub University
@@ -34,12 +42,9 @@ Work experience
   
 Skills
 ======
-* Skill 1
-* Skill 2
-  * Sub-skill 2.1
-  * Sub-skill 2.2
-  * Sub-skill 2.3
-* Skill 3
+* **Programming Languages**: C/C++, Python, Java (Spring Boot)
+* **Data Science & Machine Learning**: Numpy, PyTorch, Tensorflow, Huggingface
+* **DevOps & Version Control**: Git, Mercurial, GitHub Workflows
 
 Publications
 ======
