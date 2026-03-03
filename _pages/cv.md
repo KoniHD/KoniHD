@@ -1,6 +1,6 @@
 ---
 layout: archive
-title: "CV"
+title: "Curriculum Vitae"
 permalink: /cv/
 author_profile: true
 redirect_from:
@@ -17,36 +17,34 @@ Education
   * International Exchange (2026): **University of California Berkeley**, USA
     * Machine Learning, Computer Vision, Quantum Computing
 * B.Sc. in **Engineering Science**, Technical University of Munich, 2020 - 2024
-  * Built a broad engineering foundation spanning Electrical, Mechanical, and Computational disciplines
-  * Specialized in Computer Science
+  * Broad engineering foundation spanning Electrical, Mechanical, and Computational disciplines, specialized in Embedded Programming
   * Grade: 2.1/1.0 (German System), 210 ECTS
   * International Exchange (2023): **National University of Singapore**, Singapore
     * Data Structures & Algorithms, Discrete Structures, Probability (GPA: 4.17/5.0)
 
 Professional experience
 ======
-* Spring 2024: Academic Pages Collaborator
-  * GitHub University
-  * Duties includes: Updates and improvements to template
-  * Supervisor: The Users
+* **Infineon Technologies**, Neubiberg, Germany, Oct 2024 - Mar 2025
+  * Developed a new buildsystem using CMake, unifying the build process for different compilers
+  * Conducted technical analysis of a competitor product
+  * *Technologies*: Embedded C/C++, CMake, GCC Arm, GHS, IAR Workbench
 
-* Fall 2015: Research Assistant
-  * GitHub University
-  * Duties included: Merging pull requests
-  * Supervisor: Professor Hub
+* **Lessmüller Lasertechnik**, Munich, Germany, Nov 2022 - Dec 2022
+  * Extended an internal Test-Tool for new product features
+  * *Technologies*: C/C++, CMake
 
-* Summer 2015: Research Assistant
-  * GitHub University
-  * Duties included: Tagging issues
-  * Supervisor: Professor Git
-  
 Skills
 ======
 * **Programming Languages**: C/C++, Python, Java (Spring Boot)
 * **Data Science & Machine Learning**: Numpy, PyTorch, Tensorflow, Huggingface
 * **DevOps & Version Control**: Git, Mercurial, GitHub Workflows
 
-Publications
+Scholarships and Awards
+======
+* **Studienwerk Villigst** - One of thirteen state-sponsored scholarship foundations for gifted Students
+* **A-level distinction** - Awarded "Best Abitur" from city of Reutlingen
+
+<!-- Publications
 ======
   <ul>{% for post in site.publications reversed %}
     {% include archive-single-cv.html %}
@@ -62,8 +60,17 @@ Teaching
 ======
   <ul>{% for post in site.teaching reversed %}
     {% include archive-single-cv.html %}
-  {% endfor %}</ul>
+  {% endfor %}</ul> -->
   
-Service and leadership
+Volunteering
 ======
-* Currently signed in to 43 different slack teams
+* Mentor for an Exchange Student - Technical University of Munich, Oct 2025 - present
+  * Mentoring a new student to help them get oriented at TUM and in Munich
+* Member, Organizing Committee for Lecture Series - Evangelisches Studienwerk Villigst, May 2023 - Feb 2024
+  * Interdiciplinary Series on "forgotten crises" in various fields
+  * Coordinated academic speakers and managed weekly lecture events
+
+Additional Information
+======
+* Languages: German (native), English (C2), Spanish (A2)
+* Hobbies: (Beach-) Volleyball, Cycling, Skiing
