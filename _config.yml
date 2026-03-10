@@ -57,7 +57,7 @@ author:
 
   # Social media
   artstation       : # Username
-  bluesky          : "konihd" # Replace this with you Bluesky username
+  bluesky          : "kzeck.de" # Replace this with you Bluesky username
   facebook         : # Username
   flickr           : # Username
   foursquare       : # Username
@@ -132,7 +132,6 @@ atom_feed:
 # SEO Related
 google_site_verification : Ih07aqsTRL5bpvgv-lbzkhPGtZL-R407P7EtDAEM-1o
 bing_site_verification   : 009254F1A875DD6BC4C483769C51DF06
-yandex_site_verification :
 
 
 # Social Sharing
