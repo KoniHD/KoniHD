@@ -144,6 +144,8 @@ exclude:
   - README
   - tmp
   - vendor
+  - CLAUDE.md
+  - README.md
 keep_files:
   - .git
   - .hg
