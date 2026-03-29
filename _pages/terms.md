@@ -34,6 +34,7 @@ Third-party advertisers may also place and read cookies on your browser and/or u
 
 If you wish to disable cookies, you may do so through your web browser options. Instructions for doing so can be found on the specific web browsers' websites.
 
-#### Google Analytics
 
-Google Analytics is a web analytics tool I use to help understand how visitors engage with this website. It reports website trends using cookies and web beacons without identifying individual visitors. You can read [Google Analytics Privacy Policy](https://www.google.com/analytics/learn/privacy.html).
+#### Known Agents
+
+This site uses Known Agents to track visits from AI agents, large language models (LLMs), and web crawlers. This analytics service helps understand how AI systems interact with this website. The service collects technical information such as user agent strings, referrer information, and page visits. You can read more about Known Agents at [knownagents.com](https://knownagents.com).
