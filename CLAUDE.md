@@ -21,7 +21,6 @@ KoniHD/
 ├── _posts/                  # Blog posts in chronological order
 ├── _portfolio/              # Portfolio/project items
 ├── _publications/           # Academic publications
-├── _talks/                  # Talk/tutorial presentations
 ├── _teaching/               # Teaching materials/courses
 ├── _data/                   # Site data (collections, metadata)
 ├── _sass/                   # Custom SCSS stylesheets
@@ -85,7 +84,6 @@ Content is organized into Jekyll collections (subdirectories):
 - `_posts/` - Blog posts (`YYYY-MM-DD-title.md` format)
 - `_portfolio/` - Project/portfolio items
 - `_publications/` - Academic papers/publications
-- `_talks/` - Conference talks and tutorials
 - `_teaching/` - Teaching materials and courses
 
 Each collection item follows a frontmatter-based configuration pattern with:
