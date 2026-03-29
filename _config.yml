@@ -145,7 +145,7 @@ exclude:
   - tmp
   - vendor
   - CLAUDE.md
-  - README.md
+  - markdown_generator
 keep_files:
   - .git
   - .hg
