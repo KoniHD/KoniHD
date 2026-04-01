@@ -1,7 +1,7 @@
 ---
 permalink: /terms/
 title: "Terms and Privacy Policy"
-modified: 2016-06-06
+modified: 2026-04-01
 translated: true
 ---
 
@@ -12,28 +12,31 @@ translated: true
 
 The privacy of my visitors is extremely important. This Privacy Policy outlines the types of personal information that is received and collected and how it is used.
 
+### Data Controller
+
+Konstantin Zeck
+Contact: via the email address listed on this website.
+
 ### Log Files
 
-Like many other websites, this site uses log files to help learn about when, from where, and how often traffic flows to this site. The information in these log files include:
-
-* Internet Protocol addresses (IP)
-* Types of browser
-* Internet Service Provider (ISP)
-* Date and time stamp
-* Referring and exit pages
-* Number of clicks
-
-All of this information is not linked to anything that is personally identifiable.
+This site is hosted via GitHub Pages. As part of normal hosting operations, GitHub may automatically collect technical access data including IP addresses, browser type, and timestamps. This data is handled by GitHub as the hosting provider. Please refer to [GitHub's Privacy Statement](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement) for details.
 
 ### Cookies and Web Beacons
 
-When you visit this site "convenience" cookies are stored on your computer when you submit a comment to help you log in faster to [Disqus](https://disqus.com) the next time you leave a comment.
+This site does not use cookies. No tracking cookies, analytics cookies, or advertising cookies are set.
 
-Third-party advertisers may also place and read cookies on your browser and/or use web beacons to collect information. This site has no access or control over these cookies. You should review the respective privacy policies on any and all third-party ad servers for more information regarding their practices and how to opt-out.
-
-If you wish to disable cookies, you may do so through your web browser options. Instructions for doing so can be found on the specific web browsers' websites.
-
+### Third-Party Services
 
 #### Known Agents
 
-This site uses Known Agents to track visits from AI agents, large language models (LLMs), and web crawlers. This analytics service helps understand how AI systems interact with this website. The service collects technical information such as user agent strings, referrer information, and page visits. You can read more about Known Agents at [knownagents.com](https://knownagents.com).
+This site uses Known Agents (New York, United States) to detect and analyze visits from AI agents, large language models (LLMs), and web crawlers. This helps understand how AI systems interact with this website – a subject of personal research interest. The legal basis is legitimate interest (Art. 6(1)(f) GDPR).
+
+The service only collects the data necessary to identify and analyze bot and AI agent activity. This includes request metadata such as user agent strings, IP addresses, timestamps, and URLs. It does not collect personal information from human visitors and does not sell data to third parties. Retention of data collected by third-party services is governed by their respective privacy policies, linked above and below.
+
+You can read more at [knownagents.com](https://knownagents.com/about).
+
+**International data transfer:** Known Agents is based in the United States. For more information, see [Known Agents' Privacy Policy](https://knownagents.com/privacy-policy).
+
+### Your Rights
+
+This site does not directly store personal data. Technical data incidentally collected by GitHub and Known Agents is governed by their respective policies linked above. If you object to the use of Known Agents, the only available recourse is to refrain from using this website. You have the right to lodge a complaint with the competent supervisory authority: [Bayerisches Landesamt für Datenschutzaufsicht (BayLDA)](https://www.lda.bayern.de).

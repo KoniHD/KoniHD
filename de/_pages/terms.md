@@ -1,38 +1,42 @@
 ---
 permalink: /de/terms/
-title: "Datenschutz und Nutzungsbedingungen"
-modified: 2016-06-06
+title: "Nutzungsbedingungen und Datenschutz"
+modified: 2026-04-01
 translated: true
 ---
 
 {% include base_path %}
 {% include toc %}
 
-## Datenschutzrichtlinie
+## Datenschutzerklärung
 
 Die Privatsphäre meiner Besucher ist mir sehr wichtig. Diese Datenschutzrichtlinie beschreibt, welche persönlichen Daten erfasst und wie sie verwendet werden.
 
-### Protokolldateien
+### Verantwortlicher
 
-Wie viele andere Websites verwendet auch diese Seite Protokolldateien, um zu erfahren, wann, woher und wie oft Besucher auf diese Seite zugreifen. Die Informationen in diesen Protokolldateien umfassen:
+Konstantin Zeck  
+Kontakt: über die auf dieser Website angegebene E-Mail-Adresse.
 
-* Internet-Protokoll-Adressen (IP)
-* Browsertypen
-* Internet Service Provider (ISP)
-* Datum und Uhrzeit
-* Verweis- und Ausstiegsseiten
-* Anzahl der Klicks
+### Server-Logdateien
 
-Alle diese Informationen sind nicht mit persönlich identifizierbaren Daten verknüpft.
+Diese Website wird über GitHub Pages betrieben. Im Rahmen des regulären Hostingbetriebs kann GitHub technische Zugriffsdaten wie IP-Adressen, Browsertyp und Zeitstempel automatisch erfassen. Diese Daten werden von GitHub als Hosting-Anbieter verarbeitet. Weitere Informationen finden Sie in der [Datenschutzerklärung von GitHub](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement).
 
 ### Cookies und Web Beacons
 
-Wenn Sie diese Seite besuchen, werden "Komfort"-Cookies auf Ihrem Computer gespeichert, wenn Sie einen Kommentar hinterlassen. Diese helfen Ihnen, sich beim nächsten Mal schneller bei [Disqus](https://disqus.com) anzumelden.
+Diese Website verwendet keine Cookies.
 
-Drittanbieter können ebenfalls Cookies setzen und lesen und/oder Web Beacons verwenden, um Informationen zu sammeln. Diese Seite hat keinen Zugriff auf oder Kontrolle über diese Cookies. Sie sollten die jeweiligen Datenschutzrichtlinien der Drittanbieter-Werbeserver für weitere Informationen über deren Praktiken und Opt-out-Möglichkeiten lesen.
-
-Wenn Sie Cookies deaktivieren möchten, können Sie dies über die Optionen Ihres Webbrowsers tun. Anleitungen dazu finden Sie auf den Websites der jeweiligen Webbrowser.
+### Drittanbieterdienste
 
 #### Known Agents
 
-Diese Seite verwendet Known Agents, um Besuche von KI-Agenten, Large Language Models (LLMs) und Web-Crawlern zu verfolgen. Dieser Analysedienst hilft zu verstehen, wie KI-Systeme mit dieser Website interagieren. Der Dienst erfasst technische Informationen wie User-Agent-Strings, Referrer-Informationen und Seitenbesuche. Weitere Informationen über Known Agents finden Sie unter [knownagents.com](https://knownagents.com).
+Diese Website nutzt Known Agents (New York, Vereinigte Staaten), um Besuche von KI-Agenten, LLMs und Web-Crawlern zu erkennen und zu analysieren. Dies dient dem Verständnis, wie KI-Systeme mit dieser Website interagieren – ein Gegenstand persönlichen Forschungsinteresses. Rechtsgrundlage ist das berechtigte Interesse (Art. 6 Abs. 1 lit. f DSGVO).
+
+Der Dienst erfasst ausschließlich die Daten, die zur Identifikation und Analyse von Bot- und KI-Agenten-Aktivitäten erforderlich sind. Dazu gehören Anfrage-Metadaten wie User-Agent-Strings, IP-Adressen, Zeitstempel und URLs. Es werden keine personenbezogenen Daten menschlicher Besucher erfasst, und die Daten werden nicht an Dritte verkauft. Die Speicherdauer der von Drittanbieterdiensten erhobenen Daten richtet sich nach deren jeweiligen Datenschutzerklärungen, die oben und unten verlinkt sind.
+
+Weitere Informationen unter [knownagents.com](https://knownagents.com/about).
+
+**Internationaler Datentransfer:** Known Agents hat seinen Sitz in den Vereinigten Staaten. Weitere Informationen finden Sie in der [Datenschutzerklärung von Known Agents](https://knownagents.com/privacy-policy).
+
+### Ihre Rechte
+
+Diese Website speichert keine personenbezogenen Daten direkt. Technische Daten, die von GitHub und Known Agents im Rahmen des Betriebs erfasst werden, unterliegen deren jeweiligen, oben verlinkten Datenschutzerklärungen. Wenn Sie der Nutzung von Known Agents widersprechen möchten, besteht die einzige Möglichkeit darin, diese Website nicht zu verwenden. Sie haben das Recht, eine Beschwerde bei der zuständigen Aufsichtsbehörde einzureichen: [Bayerisches Landesamt für Datenschutzaufsicht (BayLDA)](https://www.lda.bayern.de).
