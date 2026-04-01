@@ -8,6 +8,7 @@ date: 2014-01-01
 location: "City, Country"
 published: false
 sitemap: false
+translated: false # TODO Needs to be translated before publishing!
 ---
 
 This is a description of a teaching experience. You can use markdown like any other post.

@@ -27,6 +27,7 @@ en: &DEFAULT_EN
   recent_posts               : "Recent Posts"
   undefined_wpm              : "Undefined parameter words_per_minute at _config.yml"
   loading_label              : "Loading..."
+  privacy_policy             : "Privacy Policy"
 en-US:
   <<: *DEFAULT_EN
 en-CA:
@@ -63,6 +64,7 @@ de: &DEFAULT_DE
   recent_posts               : "Neueste Beiträge"
   undefined_wpm              : "Parameter words_per_minute in _config.yml nicht definiert"
   loading_label              : "Wird geladen …"
+  privacy_policy             : "Datenschutzerklärung"
 de-DE:
   <<: *DEFAULT_DE
 de-AT:

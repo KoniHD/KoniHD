@@ -22,9 +22,20 @@ main:
     
   - title: "CV"
     url: /cv/
-    
-  # - title: "CV"
-  #   url: /cv-json/
-    
-  # - title: "Guide"
-  #   url: /markdown/
+
+# German navigation
+main_de:
+  # - title: "Publikationen"
+  #   url: /de/publications/
+
+  # - title: "Lehre"
+  #   url: /de/teaching/
+
+  - title: "Portfolio"
+    url: /de/portfolio/
+
+  - title: "Blog"
+    url: /de/year-archive/
+
+  - title: "Lebenslauf"
+    url: /de/cv/

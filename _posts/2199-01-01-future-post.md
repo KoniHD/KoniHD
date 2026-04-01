@@ -8,6 +8,7 @@ tags:
   - category2
 published: false
 sitemap: false
+translated: false # TODO Needs to be translated before publishing!
 ---
 
 This post will show up by default. To disable scheduling of future posts, edit `config.yml` and set `future: false`. 

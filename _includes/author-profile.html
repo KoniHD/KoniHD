@@ -1,8 +1,8 @@
 {% include base_path %}
-
-{% if page.author and site.data.authors[page.author] %}
-{% assign author = site.data.authors[page.author] %}{% else %}{% assign author = site.author %}
-{% endif %}
+{% assign page_locale = page.locale | default: site.locale | slice: 0,2 %}
+{% assign author = site.author %}
+{% assign author_bio = author.bio[page_locale] | default: author.bio.en | default: author.bio %}
+{% assign author_pronouns = author.pronouns[page_locale] | default: author.pronouns.en | default: author.pronouns %}
 
 <div itemscope itemtype="http://schema.org/Person">
 
@@ -17,12 +17,13 @@
 
       <div class="author__content">
             <h3 class="author__name">{{ author.name }}</h3>
-            {% if author.pronouns %}<p class="author__pronouns">{{ author.pronouns }}</p>{% endif %}
-            {% if author.bio %}<p class="author__bio">{{ author.bio }}</p>{% endif %}
+            {% if author_pronouns %}<p class="author__pronouns">{{ author_pronouns }}</p>{% endif %}
+            {% if author_bio %}<p class="author__bio">{{ author_bio }}</p>{% endif %}
       </div>
 
       <div class="author__urls-wrapper">
-            <button class="btn btn--inverse">Follow</button>
+            <button class="btn btn--inverse">{{ site.data.ui-text[page_locale].follow_label | default: "Follow"
+                  }}</button>
             <ul class="author__urls social-icons">
                   <!-- Font Awesome icons / Biographic information  -->
                   {% if author.location %}
@@ -38,7 +39,7 @@
                   {% if author.email %}
                   <li><a href="mailto:{{ author.email }}"><i class="fas fa-fw fa-envelope icon-pad-right"
                                     aria-hidden="true"></i>{{
-                              site.data.ui-text[site.locale].email_label | default: "Email" }}</a></li>
+                              site.data.ui-text[page_locale].email_label | default: "Email" }}</a></li>
                   {% endif %}
 
                   <!-- Font Awesome and Academicons icons / Academic websites -->

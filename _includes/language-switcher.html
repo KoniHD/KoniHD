@@ -1,0 +1,18 @@
+{% assign page_locale = page.locale | default: site.locale %}
+{% if page_locale contains "de" %}
+{% assign toggle_url = page.url | replace_first: '/de/', '/' %}
+{% assign toggle_label = 'EN' %}
+{% assign toggle_title = 'English' %}
+{% assign fallback_url = '/' %}
+{% else %}
+{% assign toggle_url = page.url | prepend: '/de' %}
+{% assign toggle_label = 'DE' %}
+{% assign toggle_title = 'Deutsch' %}
+{% assign fallback_url = '/de/' %}
+{% endif %}
+
+{% if page.translated %}
+<a href="{{ toggle_url | absolute_url }}" title="{{ toggle_title }}">{{ toggle_label }}</a>
+{% else %}
+<a href="{{ fallback_url | absolute_url }}" title="{{ toggle_title }}">{{ toggle_label }}</a>
+{% endif %}
