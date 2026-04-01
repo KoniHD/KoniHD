@@ -28,6 +28,12 @@ en: &DEFAULT_EN
   undefined_wpm              : "Undefined parameter words_per_minute at _config.yml"
   loading_label              : "Loading..."
   privacy_policy             : "Privacy Policy"
+  read_more                  : "Read more"
+  published_in               : "Published in"
+  recommended_citation       : "Recommended citation"
+  download_paper             : "Download Paper"
+  download_slides            : "Download Slides"
+  download_bibtex            : "Download Bibtex"
 en-US:
   <<: *DEFAULT_EN
 en-CA:
@@ -65,6 +71,12 @@ de: &DEFAULT_DE
   undefined_wpm              : "Parameter words_per_minute in _config.yml nicht definiert"
   loading_label              : "Wird geladen …"
   privacy_policy             : "Datenschutzerklärung"
+  read_more                  : "Weiterlesen"
+  published_in               : "Veröffentlicht in"
+  recommended_citation       : "Empfohlene Zitierung"
+  download_paper             : "Paper herunterladen"
+  download_slides            : "Folien herunterladen"
+  download_bibtex            : "Bibtex herunterladen"
 de-DE:
   <<: *DEFAULT_DE
 de-AT:
