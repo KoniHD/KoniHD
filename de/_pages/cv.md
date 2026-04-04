@@ -6,7 +6,10 @@ author_profile: true
 redirect_from:
   - /de/resume
 translated: true
+published: false
 ---
+
+<!--- This is not being shown -->
 
 {% include base_path %}
 

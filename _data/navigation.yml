@@ -21,7 +21,7 @@ main:
     url: /year-archive/
     
   - title: "CV"
-    url: /cv/
+    url: /files/CV-KZeck.pdf
 
 # German navigation
 main_de:
@@ -38,4 +38,4 @@ main_de:
     url: /de/year-archive/
 
   - title: "Lebenslauf"
-    url: /de/cv/
+    url: /files/CV-KZeck.pdf
