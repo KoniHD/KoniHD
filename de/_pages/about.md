@@ -12,4 +12,4 @@ translated: true
 
 Willkommen auf meiner Seite! Ich bin Masterstudent im zweiten Jahr an der Technischen Universität München und interessiere mich für High-Performance-Programmierung und effiziente Machine-Learning-Algorithmen.
 
-Leider hatte ich bisher noch keine Zeit, diese Seite richtig zu befüllen, aber ich werde dies nachholen, sobald das Studium weniger stressig ist. In der Zwischenzeit schau gerne auf meinem sozialen Medien vorbei oder schau Dir gerne meinen [Lebenslauf]({{ base_path }}/de/cv) an :smiley:.
+Leider hatte ich bisher noch keine Zeit, diese Seite richtig zu befüllen, aber ich werde dies nachholen, sobald das Studium weniger stressig ist. In der Zwischenzeit schau gerne auf meinem sozialen Medien vorbei oder schau Dir gerne meinen [Lebenslauf]({{ base_path }}/files/CV-KZeck.pdf) an :smiley:.
