@@ -1,15 +1,22 @@
 {
-  "name": "FZ icons",
+  "name": "Konstantin Zeck",
+  "short_name": "K. Zeck",
+  "description": "Personal homepage of Konstantin Zeck.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
   "icons": [
     {
-      "src": "/images/favicon-192x192.png",
+      "src": "./icons/favicon/web-app-manifest-192x192.webp",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/webp"
     },
     {
-      "src": "/images/favicons-512x512.png",
+      "src": "./icons/favicon/web-app-manifest-512x512.webp",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/webp"
     }
   ]
 }
