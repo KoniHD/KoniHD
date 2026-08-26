@@ -1,6 +1,7 @@
-<aside class="sidebar__right">
+<aside class="sidebar__right{% if include.sticky %} sticky{% endif %}{% if include.sidebar %} page__toc{% endif %}">
 <nav class="toc" markdown="1">
 <header><h4 class="nav__title"><i class="fa fa-{{ include.icon | default: 'file-text' }}"></i> {{ include.title | default: site.data.ui-text[site.locale].toc_label }}</h4></header>
+{% if include.levels %}{::options toc_levels="{{ include.levels }}" /}{% endif %}
 *  Auto generated table of contents
 {:toc .toc__menu}
 </nav>

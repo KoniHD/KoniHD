@@ -1,0 +1,40 @@
+{% include base_path %}
+
+<section class="authorship-banner" aria-label="Content authorship">
+  <div class="authorship-banner__watermark" aria-hidden="true">CC</div>
+
+  <p class="authorship-banner__eyebrow"><i class="fas fa-user-pen" aria-hidden="true"></i> 100% written by a human</p>
+  <h4 class="authorship-banner__title">{{ page.title }}</h4>
+  <a class="authorship-banner__url" href="{{ base_path }}{{ page.url }}">{{ base_path }}{{ page.url }}</a>
+
+  <dl class="authorship-banner__details">
+    <div>
+      <dt>Author</dt>
+      <dd>{{ site.author.name | default: site.name }}</dd>
+    </div>
+    <div>
+      <dt>Published on</dt>
+      <dd><time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time></dd>
+    </div>
+    <div>
+      <dt>Updated on</dt>
+      <dd><time datetime="{{ page.modified | date_to_xmlschema }}">{{ page.modified | date: "%B %-d, %Y" }}</time></dd>
+    </div>
+    <div>
+      <dt>Licensed under</dt>
+      <dd>
+        <span class="authorship-banner__licenses">
+          <a class="authorship-banner__license" href="https://creativecommons.org/" target="_blank" rel="noopener" title="Creative Commons" aria-label="Creative Commons">
+            <i class="fab fa-creative-commons" aria-hidden="true"></i>
+          </a>
+          <a class="authorship-banner__license" href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener" title="Attribution 4.0 International" aria-label="Attribution 4.0 International">
+            <i class="fab fa-creative-commons-by" aria-hidden="true"></i>
+          </a>
+          <a class="authorship-banner__license" href="{{ page.license_url }}" target="_blank" rel="noopener license" title="Attribution-NonCommercial 4.0 International" aria-label="Attribution-NonCommercial 4.0 International">
+            <i class="fab fa-creative-commons-nc" aria-hidden="true"></i>
+          </a>
+        </span>
+      </dd>
+    </div>
+  </dl>
+</section>

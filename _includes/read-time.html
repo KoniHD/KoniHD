@@ -1,10 +1,17 @@
 {% assign page_locale = page.locale | default: post.locale | default: site.locale %}
 
 {% if post.read_time %}
-{% assign words = post.content | strip_html | number_of_words %}
+{% assign read_time_content = post.content %}
+{% assign read_time_stop_at = post.read_time_stop_at %}
 {% elsif page.read_time %}
-{% assign words = page.content | strip_html | number_of_words %}
+{% assign read_time_content = page.content %}
+{% assign read_time_stop_at = page.read_time_stop_at %}
 {% endif %}
+
+{% if read_time_stop_at %}
+{% assign read_time_content = read_time_content | split: read_time_stop_at | first %}
+{% endif %}
+{% assign words = read_time_content | strip_html | number_of_words %}
 
 {% if site.words_per_minute %}
 {% if words < 180 %} {{ site.data.ui-text[page_locale].less_than | default: "less than" }} 1 {{
