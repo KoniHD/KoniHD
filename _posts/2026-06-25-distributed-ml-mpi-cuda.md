@@ -56,7 +56,7 @@ The activation function chosen is ReLU.
 The final layer is softmax, the loss is  mean cross-entropy loss (for simplicity only called cross-entropy loss) which can be fused into the softmax as we'll see once we write down the mathematical operations.
 And finally I chose SGD as an optimizer which requires less tensors to be cached than a 2nd momentum optimizer such as the widely used Adam.
 
-TODO architecture graphic.
+<!-- TODO architecture graphic. -->
 
 ## The model -- Maths
 
@@ -128,9 +128,21 @@ $$
 \frac{\partial L^{(s)}}{\partial Z_{k}^{(s)}} = p_{k}^{(s)} - y_{k}^{(s)}
 $$
 
-Finishing up the backward pass using this simple gradient however it is important to now take into account the data parallelism. So far every operation has only been performed on a single sample, indicated by the superscript $$(s)$$. This implies multiple things. First, it means we can split different samples accross independent devices since the consequent steps only rely on results of the same sample. Secondly, it also means we can perform all of the previous operations on multiple samples at the same time. To do so we change the input vector $$X_{i}$$ into an input matrix $$X_{i} \in \mathbb{R}^{N_{\text{local}} \times i}$$ where $$N_{\text{local}}$$ is the number of samples to process in parallel (on one device).
+Finishing up the backward pass using this simple gradient however it is important to now take into account the data parallelism. So far every operation has only been performed on a single sample, indicated by the superscript $$(s)$$. This implies multiple things. First, it means we can split different samples accross $$R$$ independent devices since the consequent steps only rely on results of the same sample. Secondly, it also means we can perform all of the previous operations on multiple samples at the same time. To do so we change the input vector $$X_{i}$$ into an input matrix $$X_{i} \in \mathbb{R}^{N_{\text{local}} \times i}$$ where $$N_{\text{local}}$$ is the number of samples to process in parallel (on one device).
 
-Continuing the backward pass from here on we however need to take care of this double parallelism (local and across devices). Say we distribute the work accross $$R$$ devices, which in this example are `MPI Processes`, we need to include this in the mean operation: $$\frac{1}{R} \sum_{r = 1}^{R}$$. On an implementation layer this means henceforth every $$\frac{1}{R} \sum_{r = 1}^{R}$$ is equivalent to an `MPI_Allreduce` with `MPI_SUM`.
+This becomes important since we initially specified our loss to be a mean cross-entropy loss which requires:
+
+$$
+L_{\text{total}} = \frac{1}{N_{\text{total}}} \sum_{n = 1}^{N_{\text{total}}} L^{(s)} = \frac{1}{R} \sum_{r = 1}^{R} \frac{1}{N_{\text{local}}} \sum_{n = 1}^{N_{\text{local}}}
+$$
+
+Here $$N_{\text{total}} = R \cdot N_{\text{local}}$$ constant and independent of model parameters. In practise again we want to use the local normalization factor $$\frac{1}{N_{\text{local}}}$$ to prevent the gradients from growing too large. Which is why we incorporate the normalization directly in the per-sample loss:
+
+$$
+G_{k}^{(s)} = \frac{1}{N_{\text{local}}} p_{k}^{(s)} - y_{k}^{(s)}
+$$
+
+Continuing the backward pass from here on we however need to take care of this double parallelism (local and accross devices). Say we distribute the work accross $$R$$ devices, which in this example are `MPI Processes`, we need to perform mean operation: $$\frac{1}{R} \sum_{r = 1}^{R}$$ after having successfully communicated every device's loss to all others. On an implementation layer this means henceforth every $$\frac{1}{R} \sum_{r = 1}^{R}$$ is equivalent to an `MPI_Allreduce` with `MPI_SUM`.
 
 **2nd Layer -- Gradient**
 
