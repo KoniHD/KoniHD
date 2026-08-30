@@ -36,6 +36,15 @@ div.highlighter-rouge, figure.highlight {
       background-color: var(--global-border-color);
       color: var(--global-code-text-color);
     }
+
+    &.copied {
+      width: auto;
+      padding: 0 0.65em;
+      gap: 0.35em;
+      background-color: var(--global-border-color);
+      color: var(--global-code-text-color);
+      animation: copy-confirmation 0.05s ease-out;
+    }
   }
 
   .highlight {
@@ -43,6 +52,17 @@ div.highlighter-rouge, figure.highlight {
     font-family: $monospace;
     font-size: $type-size-6;
     line-height: 1.8;
+  }
+}
+
+@keyframes copy-confirmation {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 
