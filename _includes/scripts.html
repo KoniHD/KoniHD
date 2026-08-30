@@ -1,1 +1,16 @@
 <script type="module" src="{{ base_path }}/assets/js/main.min.js"></script>
+
+<script>
+  document.querySelectorAll("div.highlighter-rouge, figure.highlight").forEach((block) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "copy-code";
+    button.title = "Copy code";
+    button.setAttribute("aria-label", "Copy code");
+    button.innerHTML = '<i class="fa-solid fa-copy" aria-hidden="true"></i>';
+    button.addEventListener("click", () => {
+      navigator.clipboard.writeText(block.querySelector("code").textContent);
+    });
+    block.appendChild(button);
+  });
+</script>

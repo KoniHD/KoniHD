@@ -12,18 +12,30 @@ div.highlighter-rouge, figure.highlight {
   box-shadow: $box-shadow;
   font-size: $type-size-4;
 
-  &:before {
+  .copy-code {
     position: absolute;
-    top: 0;
-    right: 0;
-    padding: 0.5em;
-    background-color: mix(#fff, #7a8288, 90%);
-    content: "\f121";
-    font-family: "Font Awesome 6 Free" !important;
+    top: 0.5em;
+    right: 0.5em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2em;
+    height: 2em;
+    padding: 0;
+    border: 0;
+    border-radius: $border-radius;
+    background-color: transparent;
+    color: var(--global-text-color-light);
+    cursor: pointer;
     font-size: $type-size-6;
     line-height: 1;
-    text-transform: none;
-    speak: none;
+    transition: $global-transition;
+
+    &:hover,
+    &:focus-visible {
+      background-color: var(--global-border-color);
+      color: var(--global-code-text-color);
+    }
   }
 
   .highlight {
