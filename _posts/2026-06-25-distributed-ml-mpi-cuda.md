@@ -56,7 +56,10 @@ The activation function chosen is ReLU.
 The final layer is softmax, the loss is  mean cross-entropy loss (for simplicity only called cross-entropy loss) which can be fused into the softmax as we'll see once we write down the mathematical operations.
 And finally I chose SGD as an optimizer which requires less tensors to be cached than a 2nd momentum optimizer such as the widely used Adam.
 
-<!-- TODO architecture graphic. -->
+<figure>
+  {% include mnist-architecture.svg %}
+  <figcaption>Model architecture (at inference): Two-layer perctron network with <code>input_dim = 784</code>, <code>hidden_dim = 256</code> after ReLU activation and <code>output_dim = 10</code> to prediction one of 10 digit classes.</figcaption>
+</figure>
 
 ## The model -- Maths
 
