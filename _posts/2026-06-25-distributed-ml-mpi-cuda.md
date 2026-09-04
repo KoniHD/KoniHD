@@ -1,7 +1,7 @@
 ---
 title: 'Distributed Neural Network Training from First Principles with MPI and CUDA'
 date: 2026-06-25
-modified: 2026-08-26
+modified: 2026-09-04
 permalink: /posts/2026/distributed-ml-mpi-cuda/
 license: 'CC BY-NC 4.0'
 license_url: https://creativecommons.org/licenses/by-nc/4.0/
@@ -25,25 +25,25 @@ read_time_stop_at: '<!-- read-time-stop -->'
 
 <div class="exercise-disclaimer">
   <i class="fas fa-graduation-cap" aria-hidden="true"></i>
-  <span>The full technical implementation of this blog is part of an exercise I came up through my tutoring in <a href="https://www.ce.cit.tum.de/caps/lehre/sommersemester-26/vorlesungen/parallel-programming/" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">IN2147 - Parallel Programming</a>. If you'd rather read about the techincal aspects in an exercise form visit this <a href="https://home.cit.tum.de/~zeko/" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">link</a> or attend the course 😃.</span>
+  <span>The full technical implementation of this blog is part of an exercise I came up through my tutoring in <a href="https://www.ce.cit.tum.de/caps/lehre/sommersemester-26/vorlesungen/parallel-programming/" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">IN2147 - Parallel Programming</a>. If you'd rather read about the technical aspects in an exercise form visit this <a href="https://home.cit.tum.de/~zeko/" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">link</a> or attend the course 😃.</span>
 </div>
 
 # Introduction
 
-Modern machine learning models such as LLMs or VLAs often require huge effort to be trained. Partially due to the model's own size but also partially due to the shear amount of training data that has to be iterated over. For a while now it has been established that the best way to train AI is to use accelerators such as GPUs, mostly from Nvidia, TPUs or occasionaly other ASICS. While there has been huge progress and these accelerators have become more powerful, it has become clear that a single accelerator is not able to match the demand needed by these new models. This has led to training no longer being viable on a single accelerator. Instead work has to be put into parallelizing and distributing training and inference accross multiple accelerators.
+Modern machine learning models such as LLMs or VLAs often require huge effort to be trained. Partially due to the model's own size but also partially due to the sheer amount of training data that has to be iterated over. For a while now it has been established that the best way to train AI is to use accelerators such as GPUs, mostly from Nvidia, TPUs or occasionally other ASICS. While there has been huge progress and these accelerators have become more powerful, it has become clear that a single accelerator is not able to match the demand needed by these new models. This has led to training no longer being viable on a single accelerator. Instead work has to be put into parallelizing and distributing training and inference across multiple accelerators.
 
-As one of the most prominent machine learning frame works, PyTorch currently offers four built in distribution strategies trough its [`torch.distributed`](https://docs.pytorch.org/tutorials/beginner/dist_overview.html) package. Similarly Tensorflow offers an option to [train on multiple GPUs](https://www.tensorflow.org/guide/keras/distributed_training).
-This goes to show that the multi-accelerator training is very common.
+As one of the most prominent machine learning frameworks, PyTorch currently offers four built in distribution strategies through its [`torch.distributed`](https://docs.pytorch.org/tutorials/beginner/dist_overview.html) package. Similarly Tensorflow offers an option to [train on multiple GPUs](https://www.tensorflow.org/guide/keras/distributed_training).
+This goes to show that multi-accelerator training is very common.
 
-In this blog post I want to demonstrate, using a rudimentary example, on how to train a multi-layer perceptron (MLP) on the MNIST dataset. For this I will code the training and inference loop using CUDA and distribute the training according to the [Distributed Data Parallel](https://docs.pytorch.org/docs/stable/generated/torch.nn.parallel.DistributedDataParallel.html) strategy using MPI. Using this strategy allows me to easily demonstrate one important aspect of distributing training accross multplie accelerators: overlapping communication with computation.
+In this blog post I want to demonstrate, using a rudimentary example, on how to train a multi-layer perceptron (MLP) on the MNIST dataset. For this I will code the training and inference loop using CUDA and distribute the training according to the [Distributed Data Parallel](https://docs.pytorch.org/docs/stable/generated/torch.nn.parallel.DistributedDataParallel.html) strategy using MPI. Using this strategy allows me to easily demonstrate one important aspect of distributing training across multiple accelerators: overlapping communication with computation.
 
-*Note:* A two layer MLP is by no means close to exhasterbating the resources of any common GPU in use today, especially if the model weights and cached tensors combined are approximately 1 MByte.
+*Note:* A two layer MLP is by no means close to exacerbating the resources of any common GPU in use today, especially if the model weights and cached tensors combined are approximately 1 MByte.
 
 # Basic Mathematics
 
 In order to later write the kernels in CUDA it helps me to start by first defining the desired model architecture
 and then writing down the mathematical operations.
-Especially the second step is helpful since some operations can be fused together,
+The second step is especially helpful since some operations can be fused together,
 reducing the actual number operations needed. Only after that do I start thinking about the actual software implementation.
 
 ## The model -- Architecture
@@ -51,14 +51,14 @@ reducing the actual number operations needed. Only after that do I start thinkin
 MNIST is a dataset that has been worked on countless times with models outperforming humans for a while now.
 Hence the goal of this implementation shall not be to improve any scores but to provide a simple architecture that has a verifiable training progress.
 
-That said I opted for a simple two-layer MLP with: `input_dim = 784`, `hidden_dim = 256`, `output_dim = 10` (number of digits 0 - 9).
+That said, I opted for a simple two-layer MLP with: `input_dim = 784`, `hidden_dim = 256`, `output_dim = 10` (number of digits 0 - 9).
 The activation function chosen is ReLU.
 The final layer is softmax, the loss is  mean cross-entropy loss (for simplicity only called cross-entropy loss) which can be fused into the softmax as we'll see once we write down the mathematical operations.
 And finally I chose SGD as an optimizer which requires less tensors to be cached than a 2nd momentum optimizer such as the widely used Adam.
 
 <figure>
   {% include mnist-architecture.svg %}
-  <figcaption>Model architecture (at inference): Two-layer perctron network with <code>input_dim = 784</code>, <code>hidden_dim = 256</code> after ReLU activation and <code>output_dim = 10</code> to prediction one of 10 digit classes.</figcaption>
+  <figcaption>Model architecture (at inference): Two-layer perceptron network with <code>input_dim = 784</code>, <code>hidden_dim = 256</code> after ReLU activation and <code>output_dim = 10</code> to prediction one of 10 digit classes.</figcaption>
 </figure>
 
 ## The model -- Maths
@@ -83,7 +83,7 @@ $$
 \hat{H}_{j}^{(s)} = \max \left( 0, H_{j}^{(s)} \right)
 $$
 
-After this the 2nd linear layer is similarly with the exception that no activation is needed since it would stand in the way of the softmax.
+After this the 2nd linear layer is similar with the exception that no activation is needed since it would stand in the way of the softmax.
 
 **Logits**
 
@@ -91,15 +91,15 @@ $$
 Z_{k}^{(s)} = \hat{H}_{j}^{(s)} W_{jk}^{(2)} + b_{k}^{(2)}
 $$
 
-Now after having computed the logits we already know the model's prediction since Softmax is a strictly monotoneaus function.
-This means the final layer, softmax, does not change for which index $$k$$, $$Z_{k}^{(s)}$$ is the highest. Therefore at inference we get our prediction simply through:
+Now after having computed the logits we already know the model's prediction since Softmax is a strictly monotonous function.
+This means the final layer, softmax, does not change for which index $$k$$ $$Z_{k}^{(s)}$$ is the highest. Therefore at inference we get our prediction simply through:
 
 $$
 \hat{y}^{(s)} = \arg \max_{k} Z_{k}^{(s)}
 $$
 
 On the other hand during training this prediction is of no direct interest but rather important for e.g. logs and hyper-parameter training.
-Instead we are interested in applying softmax to normalize the predictions, simultanously getting a sort of certainty in the prediction, and finally obtaining the loss of our prediction.
+Instead we are interested in applying softmax to normalize the predictions, simultaneously getting a sort of certainty in the prediction, and finally obtaining the loss of our prediction.
 
 **Softmax**
 
@@ -107,7 +107,7 @@ $$
 p_{k}^{(s)} = \frac{e^{Z_{k}^{(s)} - a}}{\sum_{l=1}^{C} e^{Z_{l}^{(s)} - a}}
 $$
 
-Here the factor $$a^{(s)} = \max_{k} Z_{k}^{(s)}$$ is for numerical stability which ensures the denominator doesn't explode by capping the exponent in the numerator and denomiator $$\leq 1$$.
+Here the factor $$a^{(s)} = \max_{k} Z_{k}^{(s)}$$ is for numerical stability which ensures the denominator doesn't explode by capping the exponent in the numerator and denominator $$\leq 1$$.
 
 **Cross Entropy Loss**
 
@@ -115,13 +115,13 @@ $$
 L^{(s)} = -\sum_{k=1}^{C} y_{k}^{(s)} \log p_{k}^{(s)}
 $$
 
-Again it helps to pay attention to the details since $$y_{k}$$ is one-hot encoded we can simplify this formula even further. (One-hot encoding: $$y_{k} = 1$$ for the correct class $$k^{*}$$ and $$y_{k \neq k^{*}} = 0$$).
+Again it helps to pay attention to the details since $$y_{k}$$ is one-hot encoded, we can simplify this formula even further. (One-hot encoding: $$y_{k} = 1$$ for the correct class $$k^{*}$$ and $$y_{k \neq k^{*}} = 0$$).
 
 $$
 L^{(s)} = -y_{k^{*}}^{(s)} \log p_{k^{*}}^{(s)} = -\log p_{k^{*}}^{(s)} = -\left( Z_{k^{*}}^{(s)} - a^{(s)} - \log \left( \sum_{l=1}^{C} e^{Z_{l}^{(s)} - a^{(s)}} \right) \right)
 $$
 
-Where we inserted the definition of Softmax in the last part. Again, the actuall value of loss $$L^{(s)}$$ is not directly relevant to the training but quite useful for hyperparameter training. For training we are only interested in its gradient w.r.t. $$Z_{k}^{(s)}$$, 
+Where we inserted the definition of Softmax in the last part. Again, the actual value of loss $$L^{(s)}$$ is not directly relevant to the training but quite useful for hyperparameter training. For training we are only interested in its gradient w.r.t. $$Z_{k}^{(s)}$$, 
 
 ### Backward Pass
 
@@ -131,7 +131,7 @@ $$
 \frac{\partial L^{(s)}}{\partial Z_{k}^{(s)}} = p_{k}^{(s)} - y_{k}^{(s)}
 $$
 
-Finishing up the backward pass using this simple gradient however it is important to now take into account the data parallelism. So far every operation has only been performed on a single sample, indicated by the superscript $$(s)$$. This implies multiple things. First, it means we can split different samples accross $$R$$ independent devices since the consequent steps only rely on results of the same sample. Secondly, it also means we can perform all of the previous operations on multiple samples at the same time. To do so we change the input vector $$X_{i}$$ into an input matrix $$X_{i} \in \mathbb{R}^{N_{\text{local}} \times i}$$ where $$N_{\text{local}}$$ is the number of samples to process in parallel (on one device).
+Finishing up the backward pass using this simple gradient however it is important to now take into account the data parallelism. So far every operation has only been performed on a single sample, indicated by the superscript $$(s)$$. This implies multiple things. First, it means we can split different samples across $$R$$ independent devices since the consequent steps only rely on results of the same sample. Secondly, it also means we can perform all of the previous operations on multiple samples at the same time. To do so we change the input vector $$X_{i}$$ into an input matrix $$X_{i} \in \mathbb{R}^{N_{\text{local}} \times i}$$ where $$N_{\text{local}}$$ is the number of samples to process in parallel (on one device).
 
 This becomes important since we initially specified our loss to be a mean cross-entropy loss which requires:
 
@@ -139,13 +139,13 @@ $$
 L_{\text{total}} = \frac{1}{N_{\text{total}}} \sum_{n = 1}^{N_{\text{total}}} L^{(s)} = \frac{1}{R} \sum_{r = 1}^{R} \frac{1}{N_{\text{local}}} \sum_{n = 1}^{N_{\text{local}}}
 $$
 
-Here $$N_{\text{total}} = R \cdot N_{\text{local}}$$ constant and independent of model parameters. In practise again we want to use the local normalization factor $$\frac{1}{N_{\text{local}}}$$ to prevent the gradients from growing too large. Which is why we incorporate the normalization directly in the per-sample loss:
+Here $$N_{\text{total}} = R \cdot N_{\text{local}}$$ constant and independent of model parameters. In practice again we want to use the local normalization factor $$\frac{1}{N_{\text{local}}}$$ to prevent the gradients from growing too large. Which is why we incorporate the normalization directly in the per-sample loss:
 
 $$
 G_{k}^{(s)} = \frac{1}{N_{\text{local}}} p_{k}^{(s)} - y_{k}^{(s)}
 $$
 
-Continuing the backward pass from here on we however need to take care of this double parallelism (local and accross devices). Say we distribute the work accross $$R$$ devices, which in this example are `MPI Processes`, we need to perform mean operation: $$\frac{1}{R} \sum_{r = 1}^{R}$$ after having successfully communicated every device's loss to all others. On an implementation layer this means henceforth every $$\frac{1}{R} \sum_{r = 1}^{R}$$ is equivalent to an `MPI_Allreduce` with `MPI_SUM`.
+Continuing the backward pass from here on we however need to take care of this double parallelism (local and across devices). Say we distribute the work across $$R$$ devices, which in this example are `MPI Processes`, we need to perform mean operation: $$\frac{1}{R} \sum_{r = 1}^{R}$$ after having successfully communicated every device's loss to all others. On an implementation layer this means henceforth every $$\frac{1}{R} \sum_{r = 1}^{R}$$ is equivalent to an `MPI_Allreduce` with `MPI_SUM`.
 
 **2nd Layer -- Gradient**
 
@@ -205,13 +205,13 @@ $$
 
 # Kernel implementation -- CUDA
 
-After having written down the math so rigorously we observe that we can implement the whole neural network using only three CUDA kernel, provided we use C++ templates. One (templated) kernel can be used for the forward linear layer, one kernel for the fused softmax + cross-entropy operations and one (templated) kernel for the backward pass through the linear layer.
+After having written down the math so rigorously we observe that we can implement the whole neural network using only three CUDA kernels, provided we use C++ templates. One (templated) kernel can be used for the forward linear layer, one kernel for the fused softmax + cross-entropy operations and one (templated) kernel for the backward pass through the linear layer.
 
 ## Forward pass Linear Layer -- CUDA
 
 **Input:** One or more samples i.e. vector or matrix respectively ($$X_{i} \in \mathbb{R}^{i \times N_{\text{local}}}$$ or $$\hat{H}_{j}$$).  
-***Optional*** **ReLU:** Based on a template parameter `template <bool FuseReLU>` ReLU is applied before the output in order to not write to device memory and reloading unnecessarily.  
-**Output:** A output vector ($$\hat{H}_{j}$$ hidden layer or logits $$Z_{k}$$).
+***Optional*** **ReLU:** Based on a template parameter `template <bool FuseReLU>` ReLU is applied before the output in order to not write to device memory and reload unnecessarily.  
+**Output:** An output vector ($$\hat{H}_{j}$$ hidden layer or logits $$Z_{k}$$).
 
 This kernel is launched twice. Once for the first linear layer with `FuseReLU = true` and once for the second linear layer with `FuseReLU = false`.
 
@@ -233,7 +233,7 @@ $$
 **Output:** Gradients w.r.t. Weight matrix, and bias ($$\frac{\partial L}{\partial W}$$, and $$\frac{\partial L}{\partial b}$$).  
 ***Optional*** **Gradient w.r.t. input:** This only happens in the second layer since the gradient
 w.r.t. the model input is irrelevant ($$\frac{\partial L}{\partial \hat{H}_{j}}$$). This is indicated by another template parameter `<bool InputGrad>`.  
-***Optional*** **ReLU gradient:** In case of the first layer the ReLU gradient is also fused into the kernel through a template parameter `<bool FuseReLU>` such that $$\frac{\partial L}{\partial H_{j}}$$ is computed before com puting the other gradients($$\frac{\partial L}{\partial H_{j}}$$ instead of $$\frac{\partial L}{\partial \hat{H}_{j}}$$).
+***Optional*** **ReLU gradient:** In case of the first layer the ReLU gradient is also fused into the kernel through a template parameter `<bool FuseReLU>` such that $$\frac{\partial L}{\partial H_{j}}$$ is computed before computing the other gradients($$\frac{\partial L}{\partial H_{j}}$$ instead of $$\frac{\partial L}{\partial \hat{H}_{j}}$$).
 
 Like the forward pass, his kernel is launched *twice*. Once for the second layer with `InputGrad = true` and `FuseReLU = false` and once for the first layer with `InputGrad = false` and `FuseReLU = true`.
 
@@ -241,17 +241,17 @@ Like the forward pass, his kernel is launched *twice*. Once for the second layer
 
 <figure>
   {% include mnist-pipeline.svg %}
-  <figcaption>Every operations is displayed as a seperate block. One can observe that the blue forward boxes are operations that can be execuded without communication with other devices whereas the green optimizer step operation needs the gradients from the orange backward passes of the linear layers. <br>
+  <figcaption>Every operation is displayed as a separate block. One can observe that the blue forward boxes are operations that can be executed without communication with other devices whereas the green optimizer step operation needs the gradients from the orange backward passes of the linear layers. <br>
   <b>Note:</b> The arrows labelled with gradients are communications that can overlap with subsequent operation blocks.</figcaption>
 </figure>
 
 After having written down the mathematical operations of the model, including some optimizations, and fixing the kernel, there is only one more aspect I would like to draw attention to. As stated in the beginning this example is not only useful to demonstrate the DDP strategy using MPI but also how to efficiently overlap communications with computation.
 
-Looking at how the [optimizer step](#optimizer-step) is performed we can see it only needs the parameters $$\theta$$ and the respective loss $$\nabla_{\theta} L$$. Meaning we don't have to wait for all gradients $$\nabla_{\theta} L$$ to become available to perform one optimizer step but instead can do so as soon as the gradient becomes available. Therefore once $$\frac{\partial L}{\partial W_{jk}^{(2)}} = \sum_{s = 1}^{N_{\text{local}}} \hat{H}_{j}^{(s)} G_{k}^{(s)}$$ and $$\frac{\partial L}{\partial b_{k}^{(2)}} = \sum_{s = 1}^{N_{\text{local}}} G_{k}^{(s)}$$ are computed per device locally we can imediately start a **non-blocking** `MPI_Iallreduce` (i.e. $$\frac{1}{R} \sum_{r = 1}^{R}$$) operation which can overlap with the computation of the gradients of the 1st layer.
+Looking at how the [optimizer step](#optimizer-step) is performed we can see it only needs the parameters $$\theta$$ and the respective loss $$\nabla_{\theta} L$$. Meaning we don't have to wait for all gradients $$\nabla_{\theta} L$$ to become available to perform one optimizer step but instead can do so as soon as the gradient becomes available. Therefore once $$\frac{\partial L}{\partial W_{jk}^{(2)}} = \sum_{s = 1}^{N_{\text{local}}} \hat{H}_{j}^{(s)} G_{k}^{(s)}$$ and $$\frac{\partial L}{\partial b_{k}^{(2)}} = \sum_{s = 1}^{N_{\text{local}}} G_{k}^{(s)}$$ are computed per device locally we can immediately start a **non-blocking** `MPI_Iallreduce` (i.e. $$\frac{1}{R} \sum_{r = 1}^{R}$$) operation which can overlap with the computation of the gradients of the 1st layer.
 
 # Conclusions
 
-This article showcased a simple hands-on example to distribute the training of a machine learning model accross multiple devices. Most importantly it demonstrates efficiency optimisations on a mathematical level which then translate to simpler coding implementations.
+This article showcased a simple hands-on example to distribute the training of a machine learning model across multiple devices. Most importantly it demonstrates efficiency optimisations on a mathematical level which then translate to simpler coding implementations.
 
 Further this article uses the Distributed Data Parallel strategy to showcase simple communication and computation overlapping. To do so this article uses the [MPI API](https://www.open-mpi.org/) which in theory can be exchanged with for instance the [NCLL API](https://developer.nvidia.com/nccl).
 
