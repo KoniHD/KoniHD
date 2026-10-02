@@ -7,6 +7,13 @@
 {% endif %}
 {% assign seo_url = seo_url | default: site.github.url %}
 
+{% assign social_image = page.og_image | default: page.header.image | default: page.header.overlay_image | default: site.og_image %}
+{% if social_image %}
+{% unless social_image contains '://' %}
+{% assign social_image = social_image | prepend: '/images/' | prepend: base_path %}
+{% endunless %}
+{% endif %}
+
 {% if page.title %}
 {% assign seo_title = page.title | append: " " | append: site.title_separator | append: " " | append: site.title %}
 {% endif %}
@@ -61,25 +68,21 @@
 
 {% if site.twitter.username %}
 <meta name="twitter:site" content="@{{ site.twitter.username | replace: " @", "" }}">
+{% endif %}
 <meta name="twitter:title"
   content="{{ page.title | default: site.title | markdownify | strip_html | strip_newlines | escape_once }}">
 <meta name="twitter:description" content="{{ seo_description }}">
 <meta name="twitter:url" content="{{ canonical_url }}">
 
-{% if page.header.image %}
+{% if social_image %}
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="{% if page.header.image contains " ://" %}{{ page.header.image }}{% else %}{{
-  page.header.image | prepend: "/images/" | prepend: base_path }}{% endif %}">
+<meta name="twitter:image" content="{{ social_image | escape }}">
 {% else %}
 <meta name="twitter:card" content="summary">
-{% if site.og_image %}
-<meta name="twitter:image" content="{{ site.og_image | prepend: " /images/" | prepend: base_path }}">
-{% endif %}
 {% endif %}
 
 {% if seo_author_twitter %}
 <meta name="twitter:creator" content="@{{ seo_author_twitter }}">
-{% endif %}
 {% endif %}
 
 {% if site.facebook %}
@@ -137,7 +140,7 @@
 {% if page.date %}
 <meta property="og:type" content="article">
 {% endif %}
-{% if page.excerpt %}
+{% if page.description or page.excerpt %}
 <meta property="og:description" name="description" content="{{ seo_description }}">
 {% elsif site.og_description %}
 <meta property="og:description" name="description" content="{{ site.og_description }}">
@@ -157,11 +160,15 @@
   </script>
 {% endif %}
 
-{% if page.header.image %}
-<meta property="og:image" content="{% if page.header.image contains " ://" %}{{ page.header.image }}{% else %}{{
-  page.header.image | prepend: "/images/" | prepend: base_path }}{% endif %}">
-{% elsif page.header.overlay_image %}
-<meta property="og:image" content="{% if page.header.overlay_image contains " ://" %}{{ page.header.overlay_image }}{%
-  else %}{{ page.header.overlay_image | prepend: "/images/" | prepend: base_path }}{% endif %}">
+{% if social_image %}
+<meta property="og:image" content="{{ social_image | escape }}">
+{% if page.og_image_width and page.og_image_height %}
+<meta property="og:image:width" content="{{ page.og_image_width }}">
+<meta property="og:image:height" content="{{ page.og_image_height }}">
+{% endif %}
+{% if page.og_image_alt %}
+<meta property="og:image:alt" content="{{ page.og_image_alt | escape }}">
+<meta name="twitter:image:alt" content="{{ page.og_image_alt | escape }}">
+{% endif %}
 {% endif %}
 <!-- end Open Graph protocol -->
