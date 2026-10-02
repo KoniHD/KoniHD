@@ -3,6 +3,11 @@ title: 'Distributed Neural Network Training from First Principles with MPI and C
 date: 2026-06-25
 modified: 2026-09-04
 permalink: /posts/2026/distributed-ml-mpi-cuda/
+description: 'Neural network for MNIST from first principles using CUDA. Distributed training across GPUs with MPI and overlap communication with computation.'
+og_image: distributed-ml-mpi-cuda.png
+og_image_width: 1200
+og_image_height: 630
+og_image_alt: 'Four stacked MPI rank frames labelled Rank 0 through Rank 3, each containing the 784-input, 256-hidden-unit, 10-output neural network.'
 license: 'CC BY-NC 4.0'
 license_url: https://creativecommons.org/licenses/by-nc/4.0/
 tags:

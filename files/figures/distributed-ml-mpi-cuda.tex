@@ -1,0 +1,90 @@
+% Sharing cover; native TikZ artwork adapted from mnist-architecture.tex.
+% Theme colours: _sass/theme/_dirt_light.scss.
+% Export at 1200 x 630 pixels for social sharing.
+\documentclass{article}
+\usepackage[paperwidth=20cm,paperheight=10.5cm,margin=0cm]{geometry}
+\usepackage{tikz}
+\usepackage{amsmath,amssymb}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\definecolor{ink}{HTML}{343434}
+\definecolor{sand}{HTML}{E9DCBE}
+\definecolor{muted}{HTML}{8E8B82}
+\begin{document}
+\begin{tikzpicture}[remember picture,overlay,x=1cm,y=1cm]
+\begin{scope}[shift={(current page.south west)}]
+\fill[white] (0,0) rectangle (20,10.5);
+\node[anchor=west,fill=sand,text=ink,rounded corners=3pt,
+      inner xsep=12pt,inner ysep=6pt,font=\sffamily\bfseries\large]
+      at (1,9.65) {BLOG POST};
+\node[anchor=east,text=ink,font=\sffamily\large] at (19,9.65) {kzeck.de};
+\node[anchor=west,text=ink,font=\sffamily\bfseries\fontsize{24}{28}\selectfont]
+      at (1,8.65) {Distributed Neural Network Training};
+\node[anchor=west,text=ink,font=\sffamily\fontsize{14}{17}\selectfont]
+      at (1,7.95) {From first principles with MPI and CUDA};
+% Identical recovered model on four ranks, drawn back to front.
+\foreach \rank in {3,2,1,0} {
+  \begin{scope}[shift={({4.45+0.7*\rank},{0.6+0.6*\rank})}]
+    \draw[fill=white,draw=sand!75!ink,line width=0.85pt,rounded corners=4pt]
+          (0,0) rectangle (9,4.9);
+    \node[anchor=north east,text=ink,font=\sffamily\bfseries\large,inner sep=0pt]
+          at (8.65,4.67) {Rank \rank};
+    \begin{scope}[shift={(1.5,1.85)},scale=0.6,transform shape,
+    font=\footnotesize,
+    neuron/.style={circle, draw=blue!60!black, thick, fill=blue!8,
+                   minimum size=9mm, inner sep=0pt},
+    bias/.style={circle, draw=gray, thick, fill=gray!8, text=gray,
+                 minimum size=7mm, inner sep=0pt},
+    conn/.style={draw=gray!75, thin},
+    biasconn/.style={draw=gray, thin, dashed},
+    layerlabel/.style={align=center, font=\footnotesize\bfseries},
+    tensorlabel/.style={align=center, font=\scriptsize}
+]
+    \node[neuron] (i1) at (0,2.2) {$x_1$};
+    \node[neuron] (i2) at (0,1.2) {$x_2$};
+    \foreach \y in {0.50,0.40,0.30}
+        \fill (0,\y) circle (0.7pt);
+    \node[neuron] (i783) at (0,-0.4) {$x_{783}$};
+    \node[neuron] (i784) at (0,-1.4) {$x_{784}$};
+    \node[bias] (ibias) at (0,3.3) {$1$};
+    \node[neuron] (h1) at (5,1.8) {$\hat{h}_1$};
+    \node[neuron] (h2) at (5,0.8) {$\hat{h}_2$};
+    \foreach \y in {0.0,-0.1,-0.2}
+        \fill (5,\y) circle (0.7pt);
+    \node[neuron] (h256) at (5,-0.9) {$\hat{h}_{256}$};
+    \node[bias] (hbias) at (5,2.9) {$1$};
+    \node[neuron] (z1) at (10,1.8) {$z_1$};
+    \node[neuron] (z2) at (10,0.8) {$z_2$};
+    \foreach \y in {0.0,-0.1,-0.2}
+        \fill (10,\y) circle (0.7pt);
+    \node[neuron] (z10) at (10,-0.9) {$z_{10}$};
+    \foreach \i in {i1,i2,i783,i784}
+        \foreach \h in {h1,h2,h256}
+            \draw[conn] (\i) -- (\h);
+    \foreach \h in {h1,h2,h256}
+        \foreach \z in {z1,z2,z10}
+            \draw[conn] (\h) -- (\z);
+    \foreach \h in {h1,h2,h256}
+        \draw[biasconn] (ibias) -- (\h);
+    \foreach \z in {z1,z2,z10}
+        \draw[biasconn] (hbias) -- (\z);
+    \node[layerlabel] at (0,-2.2) {Input layer};
+    \node[tensorlabel] at (0,-2.65) {$x \in \mathbb{R}^{784}$};
+    \node[layerlabel] at (5,-2.2) {Hidden layer};
+    \node[tensorlabel] at (5,-2.65) {$\hat{h} \in \mathbb{R}^{256}$, ReLU};
+    \node[layerlabel] at (10,-2.2) {Output layer};
+    \node[tensorlabel] at (10,-2.65) {$z \in \mathbb{R}^{10}$, logits};
+    \node[font=\scriptsize, fill=white, inner sep=2pt] at (2.5,3.0)
+        {$W^{(1)},\,b^{(1)}$};
+    \node[font=\scriptsize, fill=white, inner sep=2pt] at (7.5,2.6)
+        {$W^{(2)},\,b^{(2)}$};
+    \node[font=\scriptsize, text=gray] at (-0.65,3.3) {bias};
+    \node[font=\scriptsize, text=gray] at (4.35,2.9) {bias};
+    \end{scope}
+  \end{scope}
+}
+\node[anchor=west,text=muted,font=\sffamily\small] at (1,0.45) {Konstantin Zeck};
+\end{scope}
+\end{tikzpicture}
+\mbox{}
+\end{document}
